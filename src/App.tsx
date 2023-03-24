@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import InputFiedls from "./components/InputFields";
+import { Todo } from "./components/model";
+import TodoList from "./components/TodoList";
 
-function App() {
+const App: React.FC = () => {
+  const [todo, setTodo] = React.useState<string>("");
+  const [todos, setTodos] = React.useState<Todo[]>([]); //this is array of Todo
+
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    setTodos([...todos, { id: Date.now(), todo, isDone: false }]);
+    setTodo("");
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <span className="heading">To-Do Application</span>
+      <InputFiedls todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
+      <TodoList todos={todos} setTodos={setTodos} />
     </div>
   );
-}
+};
 
 export default App;
